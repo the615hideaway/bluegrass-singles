@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Radio Dashboard — Bluegrass Singles</title>
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container-wide">
+      <div class="inner">
+        <a href="index.html" class="brand">
+          <div class="brand-icon"><i class="fa-solid fa-music"></i></div>
+          <div class="brand-text">
+            <span class="brand-name">Bluegrass Singles</span>
+            <span class="brand-tagline">Radio Submission Portal</span>
+          </div>
+        </a>
+        <nav>
+          <a href="index.html" class="nav-link">Submit Single</a>
+          <a href="dashboard.html" class="nav-link active">Radio Dashboard</a>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <main class="container-wide main-padded">
+    <div id="login-gate" class="login-gate">
+      <div class="lock-icon"><i class="fa-solid fa-lock"></i></div>
+      <h2>Radio Dashboard</h2>
+      <p>This area is restricted to authorized radio programmers. Enter the access password to continue.</p>
+      <form id="login-form">
+        <div class="login-error" id="login-error">Incorrect password. Please try again.</div>
+        <input type="password" id="password" placeholder="Enter password" autocomplete="current-password" required>
+        <button type="submit" class="btn btn-sage btn-full">
+          <i class="fa-solid fa-right-to-bracket"></i>
+          Access Dashboard
+        </button>
+      </form>
+    </div>
+
+    <div id="dashboard" class="hidden">
+      <div class="page-hero compact-top">
+        <h1>Radio Dashboard</h1>
+        <p>Review submitted singles from the Bluegrass Singles Google Sheet.</p>
+      </div>
+
+      <div id="connection-banner" class="connection-banner hidden"></div>
+
+      <div class="dashboard-header">
+        <div class="dashboard-stats">
+          <div class="stat-card">
+            <div class="stat-value" id="stat-total">0</div>
+            <div class="stat-label">Total Singles</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-value" id="stat-month">0</div>
+            <div class="stat-label">This Month</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-value" id="stat-selected">0</div>
+            <div class="stat-label">Selected</div>
+          </div>
+        </div>
+        <div class="dashboard-actions">
+          <button class="btn btn-primary" id="create-playlist-btn" disabled>
+            <i class="fa-solid fa-list-ul"></i>
+            Create Playlist
+          </button>
+          <button class="btn btn-secondary" id="logout-btn">
+            <i class="fa-solid fa-right-from-bracket"></i>
+            Log Out
+          </button>
+        </div>
+      </div>
+
+      <div class="filter-bar">
+        <div class="filter-group">
+          <label for="filter-keyword"><i class="fa-solid fa-magnifying-glass"></i> Keyword</label>
+          <input type="search" id="filter-keyword" placeholder="Search label, writers, musicians, description…">
+        </div>
+        <div class="filter-group">
+          <label for="filter-artist"><i class="fa-solid fa-user-music"></i> Artist</label>
+          <input type="search" id="filter-artist" placeholder="Filter by artist name…">
+        </div>
+        <div class="filter-group">
+          <label for="filter-song"><i class="fa-solid fa-music"></i> Song Title</label>
+          <input type="search" id="filter-song" placeholder="Filter by song title…">
+        </div>
+        <button class="btn btn-secondary btn-sm filter-clear" id="clear-filters-btn">
+          <i class="fa-solid fa-xmark"></i> Clear
+        </button>
+      </div>
+
+      <div class="singles-table-wrap">
+        <table class="singles-table">
+          <thead>
+            <tr>
+              <th class="checkbox-cell">
+                <input type="checkbox" id="select-all" aria-label="Select all visible songs">
+              </th>
+              <th>Cover</th>
+              <th>Artist</th>
+              <th>Song Title</th>
+              <th>Duration</th>
+              <th>Release</th>
+              <th>Submitted</th>
+              <th>Preview</th>
+              <th>Downloads</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="singles-tbody">
+            <tr>
+              <td colspan="10">
+                <div class="empty-state">
+                  <i class="fa-solid fa-compact-disc"></i>
+                  <p>Loading submissions…</p>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>&copy; 2026 Bluegrass Singles &middot; Private radio programmer access</p>
+    </div>
+  </footer>
+
+  <div class="modal-overlay" id="detail-modal">
+    <div class="modal">
+      <div class="modal-header">
+        <h3>Single Details</h3>
+        <button class="modal-close" id="modal-close" aria-label="Close">&times;</button>
+      </div>
+      <div class="modal-body" id="modal-body"></div>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="playlist-modal">
+    <div class="modal modal-wide">
+      <div class="modal-header">
+        <h3><i class="fa-solid fa-list-ul"></i> Your Playlist</h3>
+        <button class="modal-close" id="playlist-modal-close" aria-label="Close">&times;</button>
+      </div>
+      <div class="modal-body" id="playlist-body"></div>
+    </div>
+  </div>
+
+  <script src="js/config.js"></script>
+  <script src="js/database.js"></script>
+  <script src="js/dashboard.js"></script>
+</body>
+</html>

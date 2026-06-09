@@ -1,0 +1,174 @@
+================================================================================
+BLUEGRASS SINGLES — GOOGLE SHEETS & STRIPE SETUP INSTRUCTIONS
+================================================================================
+
+Follow these steps to connect the Bluegrass Singles app to your Google Sheet
+database. This takes about 10 minutes.
+
+Overview:
+  1. Create Sheet      → New Google Spreadsheet
+  2. Add Script        → Apps Script backend
+  3. Deploy            → Web App URL
+  4. Configure         → Paste URL in config.js
+  5. Test              → Submit a single or open the Radio Dashboard
+
+
+--------------------------------------------------------------------------------
+STEP 1 — CREATE YOUR GOOGLE SHEET
+--------------------------------------------------------------------------------
+
+1. Go to https://sheets.google.com and create a new blank spreadsheet.
+
+2. Click the spreadsheet title at the top and rename it to:
+   Bluegrass Singles
+
+3. You do NOT need to add column headers manually — the script creates them
+   automatically on first submission.
+
+NOTE: The sheet will store these fields:
+  - Artist Name
+  - Song Title
+  - Cover Art
+  - Description
+  - Duration
+  - Release Date
+  - Label
+  - Writers
+  - Musicians
+  - Preview Link
+  - MP3 Download Link
+  - WAV Download Link
+  - Generated One Sheet
+  - Submitted Date
+
+
+--------------------------------------------------------------------------------
+STEP 2 — ADD THE APPS SCRIPT CODE
+--------------------------------------------------------------------------------
+
+1. In your spreadsheet, click Extensions → Apps Script.
+
+2. Delete any code in the editor window.
+
+3. Open the file google-apps-script/Code.gs from this project folder on your
+   computer.
+
+4. Copy ALL of the code and paste it into the Apps Script editor.
+
+5. Click the Save icon (or press Ctrl+S). Name the project
+   "Bluegrass Singles API" if prompted.
+
+
+--------------------------------------------------------------------------------
+STEP 3 — DEPLOY AS A WEB APP
+--------------------------------------------------------------------------------
+
+1. In Apps Script, click Deploy → New deployment.
+
+2. Click the gear icon next to "Select type" and choose Web app.
+
+3. Set these options exactly:
+     Description:    Bluegrass Singles API
+     Execute as:     Me
+     Who has access: Anyone
+
+4. Click Deploy.
+
+5. Google will ask you to authorize the script — click through and allow
+   access to your spreadsheet.
+
+6. Copy the Web app URL. It looks like:
+     https://script.google.com/macros/s/AKfycb.../exec
+
+IMPORTANT: "Who has access" must be set to Anyone so the submission form and
+dashboard can read/write data from the browser. Your Radio Dashboard password
+(615bluegrass) still protects DJ access separately.
+
+
+--------------------------------------------------------------------------------
+STEP 4 — PASTE THE URL INTO config.js
+--------------------------------------------------------------------------------
+
+1. Open js/config.js in this project folder.
+
+2. Find the line googleScriptUrl: and replace the placeholder with your
+   Web App URL:
+
+     googleScriptUrl: 'https://script.google.com/macros/s/YOUR_ID_HERE/exec',
+
+3. Save the file.
+
+4. Refresh the Submit Single page (index.html) or Radio Dashboard
+   (dashboard.html) and test a submission.
+
+
+--------------------------------------------------------------------------------
+STEP 5 — TEST THE CONNECTION
+--------------------------------------------------------------------------------
+
+1. Make sure googleScriptUrl in js/config.js is saved with your real URL.
+
+2. Open index.html and submit a test single (after completing Stripe payment).
+
+3. Open dashboard.html, enter the dashboard password, and confirm the
+   submission appears in the table.
+
+4. Check your Google Sheet — a new row should appear with all field data.
+
+
+--------------------------------------------------------------------------------
+STRIPE PAYMENT — RETURN TO THE FORM
+--------------------------------------------------------------------------------
+
+The app uses this Stripe Payment Link (configured in js/config.js):
+  https://buy.stripe.com/9B6fZg8ta8pZefS3bV5Ne01
+
+After a user pays, they must return to the submit page so the form unlocks.
+
+In Stripe Dashboard:
+  1. Go to Payment Links
+  2. Select your payment link
+  3. Under "After payment", set redirect to your hosted submit page:
+     https://yoursite.com/index.html?payment=success
+
+When the user lands on that URL, the form unlocks automatically and shows:
+  "Payment successful! The form is now unlocked."
+
+For local testing before hosting, you can manually open:
+  index.html?payment=success
+after completing payment to simulate the return.
+
+
+--------------------------------------------------------------------------------
+TROUBLESHOOTING
+--------------------------------------------------------------------------------
+
+Submissions fail with "Connection failed"
+  - Double-check the URL in config.js ends with /exec (not /dev).
+  - Re-deploy if you changed the script code.
+
+Authorization errors
+  - Re-deploy the web app and complete the Google authorization flow again.
+  - Make sure you are the owner of the spreadsheet.
+
+Cover art upload fails
+  - Large image uploads exceed Google Sheets cell limits (50,000 characters).
+  - Ask artists to use an image URL instead of uploading a file directly.
+
+Updated the script code?
+  - Go to Deploy → Manage deployments in Apps Script.
+  - Click the pencil icon, set version to New version, and click Deploy.
+  - The URL stays the same.
+
+Existing sheet has old audio columns?
+  - Rename columns K, L, M to:
+      Preview Link
+      MP3 Download Link
+      WAV Download Link
+  - Then re-deploy the Apps Script.
+
+Google Sheets not connected (dashboard banner)
+  - Open js/config.js and paste your Apps Script Web App URL.
+  - See Step 4 above.
+
+================================================================================

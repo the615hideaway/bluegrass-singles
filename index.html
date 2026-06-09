@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Submit Single — Bluegrass Singles</title>
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container">
+      <div class="inner">
+        <a href="index.html" class="brand">
+          <div class="brand-icon"><i class="fa-solid fa-music"></i></div>
+          <div class="brand-text">
+            <span class="brand-name">Bluegrass Singles</span>
+            <span class="brand-tagline">Radio Submission Portal</span>
+          </div>
+        </a>
+        <nav>
+          <a href="index.html" class="nav-link active">Submit Single</a>
+          <a href="dashboard.html" class="nav-link">Radio Dashboard</a>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <main class="container submit-page">
+    <div class="test-mode-banner hidden" id="test-mode-banner">
+      <i class="fa-solid fa-flask"></i>
+      <span>TEST MODE — Payment disabled for testing</span>
+    </div>
+
+    <div class="page-hero submit-hero">
+      <h1>Submit Your Single</h1>
+      <p>Get your latest bluegrass release in front of radio programmers nationwide.</p>
+    </div>
+
+    <section class="payment-hero" id="payment-card">
+      <div class="payment-step-badge" id="payment-step-badge">
+        <i class="fa-solid fa-lock"></i> Step 1 — Payment Required
+      </div>
+
+      <div class="payment-hero-inner" id="payment-unpaid">
+        <div class="payment-hero-main">
+          <p class="payment-fee-label">One-time $5 submission fee</p>
+          <h2 class="payment-hero-title">Pay to Unlock Your Submission</h2>
+          <p class="payment-hero-desc">Secure checkout via Stripe. After payment, you'll return here and the submission form will unlock automatically.</p>
+        </div>
+        <div class="payment-hero-cta">
+          <div class="payment-price-display">
+            <span class="payment-price-amount">$5</span>
+            <span class="payment-price-unit">USD</span>
+          </div>
+          <button class="btn btn-primary btn-pay-lg" id="pay-btn">
+            <i class="fa-solid fa-credit-card"></i>
+            Pay $5 to Continue
+          </button>
+        </div>
+      </div>
+
+      <div class="payment-hero-inner payment-hero-paid hidden" id="payment-paid">
+        <div class="payment-hero-main">
+          <p class="payment-fee-label paid">Payment successful</p>
+          <h2 class="payment-hero-title">Form Unlocked</h2>
+          <p class="payment-hero-desc">Payment was successful and the form is now unlocked. Fill out your single details below to submit to the radio database.</p>
+        </div>
+        <div class="payment-hero-cta">
+          <div class="payment-confirmed-badge">
+            <i class="fa-solid fa-circle-check"></i>
+            <span>$5.00 paid</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="submit-instruction" id="submit-instruction">
+      <i class="fa-solid fa-circle-info"></i>
+      <p>After payment, fill out the form below. Your submission will be automatically added to the radio database.</p>
+    </div>
+
+    <section class="form-card locked" id="form-card">
+      <div class="form-step-badge">
+        <i class="fa-solid fa-file-audio"></i> Step 2 — Single Details
+      </div>
+
+      <form id="submit-form" novalidate>
+        <div class="form-section">
+          <h3 class="form-section-title">Artist &amp; Release Info</h3>
+        <div class="form-grid">
+          <div class="form-group">
+            <label for="artistName">Artist Name <span class="required">*</span></label>
+            <input type="text" id="artistName" name="artistName" required placeholder="e.g. The Lonesome River Band">
+          </div>
+          <div class="form-group">
+            <label for="songTitle">Song Title <span class="required">*</span></label>
+            <input type="text" id="songTitle" name="songTitle" required placeholder="e.g. Long Time Gone">
+          </div>
+          <div class="form-group full-width">
+            <label>Cover Art</label>
+            <div class="cover-art-row">
+              <div class="cover-art-preview" id="cover-preview"><span>No image</span></div>
+              <div class="cover-art-inputs">
+                <input type="file" id="coverArtFile" accept="image/*" class="file-input">
+                <input type="url" id="coverArtUrl" name="coverArtUrl" placeholder="Or paste image URL">
+                <span class="form-hint">Upload an image or provide a direct URL (max 5 MB).</span>
+              </div>
+            </div>
+          </div>
+          <div class="form-group full-width">
+            <label for="description">Description</label>
+            <textarea id="description" name="description" rows="4" placeholder="Tell us about this single — inspiration, story, or press-ready bio snippet."></textarea>
+          </div>
+          <div class="form-group">
+            <label for="duration">Duration</label>
+            <input type="text" id="duration" name="duration" placeholder="e.g. 3:42">
+          </div>
+          <div class="form-group">
+            <label for="releaseDate">Release Date</label>
+            <input type="date" id="releaseDate" name="releaseDate">
+          </div>
+          <div class="form-group">
+            <label for="label">Label</label>
+            <input type="text" id="label" name="label" placeholder="e.g. Pinecastle Records">
+          </div>
+          <div class="form-group">
+            <label for="writers">Writers</label>
+            <input type="text" id="writers" name="writers" placeholder="e.g. J. Smith, M. Johnson">
+          </div>
+        </div>
+        </div>
+
+        <div class="form-section">
+          <h3 class="form-section-title">Credits</h3>
+          <div class="form-grid">
+            <div class="form-group full-width">
+              <label for="musicians">Musicians</label>
+              <textarea id="musicians" name="musicians" rows="3" placeholder="List musicians and their instruments, e.g.&#10;John Smith — banjo&#10;Mary Johnson — fiddle"></textarea>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-section">
+          <h3 class="form-section-title">Audio Links</h3>
+          <div class="form-grid audio-fields">
+          <div class="form-group full-width">
+            <label for="previewLink">Preview Link <span class="label-note">(for DJs to stream/listen in browser)</span></label>
+            <input type="url" id="previewLink" name="previewLink" placeholder="https://...">
+          </div>
+          <div class="form-group full-width">
+            <label for="mp3DownloadLink">MP3 Download Link <span class="label-note">(direct download)</span></label>
+            <input type="url" id="mp3DownloadLink" name="mp3DownloadLink" placeholder="https://...">
+          </div>
+          <div class="form-group full-width">
+            <label for="wavDownloadLink">WAV Download Link <span class="label-note">(high quality)</span></label>
+            <input type="url" id="wavDownloadLink" name="wavDownloadLink" placeholder="https://...">
+          </div>
+          </div>
+        </div>
+
+        <div class="form-actions">
+          <button type="reset" class="btn btn-secondary">Clear Form</button>
+          <button type="submit" class="btn btn-sage btn-submit-lg">
+            <i class="fa-solid fa-paper-plane"></i>
+            Submit Single — $5
+          </button>
+        </div>
+      </form>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>&copy; 2026 Bluegrass Singles &middot; Supporting independent bluegrass artists</p>
+    </div>
+  </footer>
+
+  <script src="js/config.js"></script>
+  <script src="js/database.js"></script>
+  <script src="js/submit.js"></script>
+</body>
+</html>
