@@ -1,3 +1,21 @@
+// Bluegrass Singles Database Connector
+const BluegrassDB = {
+  async addSingle(data) {
+    try {
+      const response = await apiPost(CONFIG.googleScriptUrl, data);
+      if (response.status === 'success') {
+        return { success: true };
+      } else {
+        throw new Error(response.message || 'Submission failed');
+      }
+    } catch (error) {
+      console.error('Submission error:', error);
+      throw error;
+    }
+  }
+};
+
+// Keep the apiPost function we added for debugging
 async function apiPost(url, data) {
   try {
     console.log("Sending to:", url);
