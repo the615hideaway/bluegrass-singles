@@ -1,10 +1,19 @@
 // Bluegrass Singles Database Connector
 const BluegrassDB = {
+  isConfigured() {
+    return !!CONFIG && !!CONFIG.googleScriptUrl;
+  },
+
   async addSingle(data) {
     try {
+      if (!this.isConfigured()) {
+        throw new Error("Google Sheets is not configured");
+      }
+
       const response = await apiPost(CONFIG.googleScriptUrl, data);
+      
       if (response.status === 'success') {
-        return { success: true };
+        return { success: true, message: "Submission successful!" };
       } else {
         throw new Error(response.message || 'Submission failed');
       }
@@ -15,7 +24,6 @@ const BluegrassDB = {
   }
 };
 
-// Keep the apiPost function we added for debugging
 async function apiPost(url, data) {
   try {
     console.log("Sending to:", url);
